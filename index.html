@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sloppa Generator</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+  }
+
+  .emoji {
+    font-size: 48pt;
+  }
+
+  .generated-text {
+    margin-top: 20px;
+    font-size: 24pt;
+  }
+
+  button {
+    margin-top: 20px;
+    font-size: 18pt;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="emoji" id="emojiOutput">🤔</div>
+<div class="generated-text" id="textOutput">...</div>
+<button onclick="generateSloppa()">Generate Sloppa</button>
+
+<script>
+  // Define the food and characteristics arrays with corresponding emojis
+  
+  const tendencies = [
+  	{name: 'clear and yellow', emoji: '🟡'},
+  	{name: 'abang,', emoji: '🪖'},
+  	{name: 'maoist', emoji: '🇨🇳'},
+   	{name: 'democrat', emoji: '🇺🇸'},
+   	{name: 'proper northern', emoji: '🏴󠁧󠁢󠁥󠁮󠁧󠁿'},
+   	{name: 'Thomist', emoji: '🇻🇦'},
+    {name: 'Heideggerian', emoji: '🇩🇪'},
+    {name: 'Quentin Pharr', emoji: '🚬'},
+    {name: 'PY1011-themed', emoji: '📚'},
+    {name: 'PY1013-themed', emoji: '☝️'},
+    {name: 'Swiss', emoji: '🇨🇭'},
+  ];
+  const foods = [
+    {name: 'pizza', emoji: '🍕'},
+    {name: 'turkey', emoji: '🦃'},
+    {name: 'burger', emoji: '🍔'},
+    {name: 'chicken nugget', emoji: '🍗'},
+    {name: 'shawarma', emoji: '🌯'},
+    // Add more food options as needed
+  ];
+
+  const characteristics = [
+    {name: 'the ocky way', emoji: '🗽'},
+    {name: 'with floppa characteristics', emoji: '🐱'},
+    {name: 'with bingus characteristics', emoji: '🧠'},
+    {name: 'with Inés characteristics', emoji: '🇫🇷'},
+    {name: 'at the hawker centre', emoji: '🇸🇬'},
+    {name: 'to fool the unwise', emoji: '👴'},
+    {name: 'with based NATO', emoji: '🪖'},
+    {name: 'from Blackpool', emoji: '🇬🇧'},
+    {name: 'in cider town', emoji: '🍻'}
+    // Add more characteristic options as needed
+  ];
+
+  // Function to generate a random integer
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+// Function to generate Sloppa
+function generateSloppa() {
+  let sloppaText = '';
+  let sloppaEmoji = '';
+  
+  // Randomly decide what to include: tendencies, characteristics, or both
+  let include = getRandomInt(1, 3);
+
+  // Include Tendencies with a 1/3 chance
+  if (include === 1 || include === 3) {
+    let tendency = tendencies[getRandomInt(0, tendencies.length - 1)];
+    sloppaText += tendency.name + ' ';
+    sloppaEmoji += tendency.emoji;
+  }
+
+  // Include Food Segment
+  if (include === 2 || include === 3) {
+    let foodSegment = '';
+    let foodEmojiSegment = '';
+    let foodCount = getRandomInt(2, 4); // 2 to 4 food items
+    let chosenFoods = new Set(); // To track chosen foods and avoid duplicates
+
+    while(chosenFoods.size < foodCount) {
+      let randomIndex = getRandomInt(0, foods.length - 1);
+      if (!chosenFoods.has(randomIndex)) {
+        chosenFoods.add(randomIndex);
+        let food = foods[randomIndex];
+        foodSegment += foodSegment ? ' ' + food.name : food.name;
+        foodEmojiSegment += food.emoji;
+      }
+    }
+    sloppaText += foodSegment;
+    sloppaEmoji += foodEmojiSegment;
+  }
+
+  // Include Characteristics with a 1/3 chance
+  if (include === 1 || include === 2) {
+    let characteristic = characteristics[getRandomInt(0, characteristics.length - 1)];
+    sloppaText += ' ' + characteristic.name;
+    sloppaEmoji += characteristic.emoji;
+  }
+
+  // Output the Sloppa text and emojis
+  document.getElementById('textOutput').textContent = sloppaText.trim();
+  document.getElementById('emojiOutput').textContent = sloppaEmoji;
+}
+
+</script>
+
+</body>
+</html>
